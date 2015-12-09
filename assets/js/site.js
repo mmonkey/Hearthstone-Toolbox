@@ -25,24 +25,24 @@ function processCardData (data) {
 				card.set = setName;
 				cards.push(card);
 			}
-		})
+		});
 	});
 	return cards;
 }
 
 function renderCardList (cards) {
 	$.each(cards, function (index, card) {
-		if (card.hasOwnProperty('collectible') && card.hasOwnProperty('type') && card['type'].toLowerCase() !== 'hero') {
-			var set = card.hasOwnProperty('set') ? card['set'] : '';
-			var name = card.hasOwnProperty('name') ? card['name'] : '';
-			var rarity = card.hasOwnProperty('rarity') ? card['rarity'] : '';
-			var type = card.hasOwnProperty('type') ? card['type'] : '';
-			var race = card.hasOwnProperty('race') ? card['race'] : '';
-			var playerClass = card.hasOwnProperty('playerClass') ? card['playerClass'] : '';
-			var cost = card.hasOwnProperty('cost') ? card['cost'] : '';
-			var attack = card.hasOwnProperty('attack') ? card['attack'] : '';
-			var health = card.hasOwnProperty('health') ? card['health'] : '';
-			var text = card.hasOwnProperty('text') ? card['text'] : '';
+		if (card.hasOwnProperty('collectible') && card.hasOwnProperty('type') && card.type.toLowerCase() !== 'hero') {
+			var set = card.hasOwnProperty('set') ? card.set : '';
+			var name = card.hasOwnProperty('name') ? card.name : '';
+			var rarity = card.hasOwnProperty('rarity') ? card.rarity : '';
+			var type = card.hasOwnProperty('type') ? card.type : '';
+			var race = card.hasOwnProperty('race') ? card.race : '';
+			var playerClass = card.hasOwnProperty('playerClass') ? card.playerClass : '';
+			var cost = card.hasOwnProperty('cost') ? card.cost : '';
+			var attack = card.hasOwnProperty('attack') ? card.attack : '';
+			var health = card.hasOwnProperty('health') ? card.health : '';
+			var text = card.hasOwnProperty('text') ? card.text : '';
 
 			var row = '<tr>';
 			row += '<td>' + set + '</td>';
@@ -57,7 +57,14 @@ function renderCardList (cards) {
 			row += '<td>' + text + '</td>';
 			row += '</tr>';
 
-			$('tbody.card-list-table').append(row);
+			var cardRow = $(row).addClass('card-row').attr('data-card-id', card.id);
+			$('table.card-list-table tbody').append(cardRow);
 		}
+	});
+
+	$('table.card-list-table').tablesorter();
+
+	$('table.card-list-table tbody tr').click(function () {
+		var image = '<img src="' + imageUrlPrefix + $(this).data('cardId') + imageUrlExtension + '">';
 	});
 }
