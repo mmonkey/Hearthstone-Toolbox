@@ -32,7 +32,7 @@ function processCardData (data) {
 
 function renderCardList (cards) {
 	$.each(cards, function (index, card) {
-		if (card.hasOwnProperty('collectible') && card.hasOwnProperty('type') && card.type.toLowerCase() !== 'hero') {
+		if (card.hasOwnProperty('collectible') && card.hasOwnProperty('type') && card.type.toLowerCase() !== 'hero' && card.hasOwnProperty('rarity')) {
 			var set = card.hasOwnProperty('set') ? card.set : '';
 			var name = card.hasOwnProperty('name') ? card.name : '';
 			var rarity = card.hasOwnProperty('rarity') ? card.rarity : '';
@@ -42,7 +42,7 @@ function renderCardList (cards) {
 			var cost = card.hasOwnProperty('cost') ? card.cost : '';
 			var attack = card.hasOwnProperty('attack') ? card.attack : '';
 			var health = card.hasOwnProperty('health') ? card.health : '';
-			var text = card.hasOwnProperty('text') ? card.text : '';
+			var text = card.hasOwnProperty('text') ? card.text.replace(/\$/g, '') : '';
 
 			var row = '<tr>';
 			row += '<td>' + set + '</td>';
@@ -63,8 +63,4 @@ function renderCardList (cards) {
 	});
 
 	$('table.card-list-table').tablesorter();
-
-	$('table.card-list-table tbody tr').click(function () {
-		var image = '<img src="' + imageUrlPrefix + $(this).data('cardId') + imageUrlExtension + '">';
-	});
 }
